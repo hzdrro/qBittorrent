@@ -268,7 +268,7 @@ void PeerListWidget::showPeerListMenu(const QPoint &)
 
     // Add Peer Action
     // Do not allow user to add peers in a private torrent
-    if (!torrent->isQueued() && !torrent->isChecking() && !torrent->isPrivate())
+    if (!torrent->isQueued() && !torrent->isChecking())
     {
         menu->addAction(UIThemeManager::instance()->getIcon("user-group-new"), tr("Add a new peer...")
             , this, [this, torrent]()
