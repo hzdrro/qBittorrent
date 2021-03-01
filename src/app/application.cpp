@@ -302,7 +302,7 @@ void Application::setFileLoggerAgeType(const int value)
 
 void Application::processMessage(const QString &message)
 {
-    const QStringList params = message.split(PARAMS_SEPARATOR, QString::SkipEmptyParts);
+    const QStringList params = message.split(PARAMS_SEPARATOR, Qt::SkipEmptyParts);
     // If Application is not running (i.e., other
     // components are not ready) store params
     if (m_running)
@@ -563,7 +563,7 @@ void Application::processParams(const QStringList &params)
 
         if (param.startsWith(QLatin1String("@addPaused=")))
         {
-            torrentParams.addPaused = (param.midRef(11).toInt() != 0);
+            torrentParams.addPaused = (QStringView(param).mid(11).toInt() != 0);
             continue;
         }
 
@@ -593,7 +593,7 @@ void Application::processParams(const QStringList &params)
 
         if (param.startsWith(QLatin1String("@skipDialog=")))
         {
-            skipTorrentDialog = (param.midRef(12).toInt() != 0);
+            skipTorrentDialog = (QStringView(param).mid(12).toInt() != 0);
             continue;
         }
 
