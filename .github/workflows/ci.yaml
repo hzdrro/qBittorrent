@@ -65,7 +65,8 @@ jobs:
       run: |
         $packages = `
           "boost-circular-buffer:x64-windows-static-release",
-          "libtorrent:x64-windows-static-release"
+          "libtorrent:x64-windows-static-release",
+          "zlib:x64-windows-static-release"
         ${{ env.RUNVCPKG_VCPKG_ROOT }}/vcpkg.exe upgrade `
             --overlay-triplets=${{ github.workspace }}/triplets_overlay `
             --overlay-ports=${{ github.workspace }}/vcpkg `
