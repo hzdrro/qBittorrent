@@ -55,18 +55,18 @@ jobs:
     - name: configure vcpkg triplet overlay for release builds only
       run: |
         New-Item -Path ${{ github.workspace }} -Name "triplets_overlay" -ItemType Directory
-        Copy-Item ${{ env.RUNVCPKG_VCPKG_ROOT }}/triplets/x64-windows-static.cmake `
-          ${{ github.workspace }}/triplets_overlay/x64-windows-static-release.cmake
-        Add-Content ${{ github.workspace }}/triplets_overlay/x64-windows-static-release.cmake `
+        Copy-Item ${{ env.RUNVCPKG_VCPKG_ROOT }}/triplets/x64-windows.cmake `
+          ${{ github.workspace }}/triplets_overlay/x64-windows-release.cmake
+        Add-Content ${{ github.workspace }}/triplets_overlay/x64-windows-release.cmake `
           -Value "set(VCPKG_BUILD_TYPE release)"
 
     # clear buildtrees after each package installation to reduce disk space requirements
     - name: install dependencies via vcpkg
       run: |
         $packages = `
-          "boost-circular-buffer:x64-windows-static-release",
-          "libtorrent:x64-windows-static-release",
-          "zlib:x64-windows-static-release"
+          "boost-circular-buffer:x64-windows-release",
+          "libtorrent:x64-windows-release",
+          "zlib:x64-windows-release"
         ${{ env.RUNVCPKG_VCPKG_ROOT }}/vcpkg.exe upgrade `
             --overlay-triplets=${{ github.workspace }}/triplets_overlay `
             --overlay-ports=${{ github.workspace }}/vcpkg `
@@ -102,9 +102,10 @@ jobs:
         cmake -B build -G "Ninja" ^
           -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ^
           -DCMAKE_TOOLCHAIN_FILE=${{ env.VCPKG_DEST_WIN }}\scripts\buildsystems\vcpkg.cmake ^
-          -DVCPKG_TARGET_TRIPLET=x64-windows-static-release ^
+          -DVCPKG_TARGET_TRIPLET=x64-windows-release ^
           -DVERBOSE_CONFIGURE=ON ^
-          -DMSVC_RUNTIME_DYNAMIC=OFF ^
+          -DMSVC_RUNTIME_DYNAMIC=ON ^
+          -DSTACKTRACE=OFF ^
           --graphviz=build\target_graph.dot
         cmake --build build
     - name: Win - ${{ matrix.qt_version }} - Create 7z Release
