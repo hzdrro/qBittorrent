@@ -24,7 +24,7 @@ jobs:
         platform: [windows-latest]
         arch: [x64]
         build_type: [RelWithDebInfo, Release]
-        qt_version: [6.0.0]
+        qt_version: [6.0.3]
         include:
           - platform: windows-latest
             arch: x64
@@ -100,7 +100,7 @@ jobs:
       shell: cmd
       run: |
         cmake -B build -G "Ninja" ^
-          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo ^
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ^
           -DCMAKE_TOOLCHAIN_FILE=${{ env.VCPKG_DEST_WIN }}\scripts\buildsystems\vcpkg.cmake ^
           -DVCPKG_TARGET_TRIPLET=x64-windows-static-release ^
           -DVERBOSE_CONFIGURE=ON ^
