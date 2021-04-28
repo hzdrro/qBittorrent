@@ -12,7 +12,7 @@ project(qBittorrent
 set(CMAKE_FIND_PACKAGE_PREFER_CONFIG ON)
 # version requirements - older vesions may work, but you are on your own
 set(minBoostVersion 1.65)
-set(minQtVersion 6.0.2)
+set(minQtVersion 6.0.0)
 set(minOpenSSLVersion 1.1.1)
 set(minLibtorrentVersion 1.2.13)
 set(minZlibVersion 1.2.11)
@@ -47,7 +47,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
         endif()
     endif()
 elseif (MSVC)
-    feature_option(MSVC_RUNTIME_DYNAMIC "Use MSVC dynamic runtime library (-MD) instead of static (-MT)" ON)
+    feature_option(MSVC_RUNTIME_DYNAMIC "Use MSVC dynamic runtime library (-MD) instead of static (-MT)" OFF)
 endif()
 
 include(GNUInstallDirs)
